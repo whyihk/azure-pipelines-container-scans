@@ -12,8 +12,6 @@ resources:
 variables:
   image_name: openjdk
   image_tag: 17-jdk-slim
-  clair_db: arminc/clair-db:latest
-  clair_scan: arminc/clair-local-scan:v2.1.7_5125fde67edee46cb058a3feee7164af9645e07d
 
 jobs:
 
