@@ -4,8 +4,7 @@ name: $(BuildDefinitionName)_$(date:yyyyMMdd)_$(BuildID)$(rev:.r)
 trigger:
 - main
 
-pool:
-  vmImage: 'ubuntu-latest'
+pool: 'Hosted Agent'
 
 resources:
 - repo: self
