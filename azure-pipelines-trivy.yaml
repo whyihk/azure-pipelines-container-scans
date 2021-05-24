@@ -1,0 +1,40 @@
+# Pipeline to build an image based on a Dockerfile and perform vulernability scan by Clair V2
+name: $(BuildDefinitionName)_$(date:yyyyMMdd)_$(BuildID)$(rev:.r)
+
+trigger:
+- main
+
+pool: app-agents
+
+resources:
+- repo: self
+
+variables:
+  image_name: openjdk
+  image_tag: 17-jdk-slim
+  clair_db: arminc/clair-db:latest
+  clair_scan: arminc/clair-local-scan:v2.1.7_5125fde67edee46cb058a3feee7164af9645e07d
+
+jobs:
+
+- job: TrivyScanContainerImage
+  displayName: Scan container image by Trivy
+  steps:
+  - task: Docker@2
+    displayName: 'Build an image'
+    inputs:
+      command: build
+      repository: $(image_name)
+      tags: $(image_tag)
+      dockerFile: '**/Dockerfile'
+
+  - script: |
+      mkdir report
+      trivy image -s HIGH,CRITICAL -o ./report/trivy-image-scan-report.txt $(image_name):$(image_tag)
+    displayName: "Image scan by Trivy"
+    continueOnError: true
+
+  - publish: ./report
+    artifact: ImageScans
+    displayName: Publish Clair Scan Report
+    condition: always()we

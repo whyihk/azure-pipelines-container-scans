@@ -1,8 +1,7 @@
 # Pipeline to build an image based on a Dockerfile and perform vulernability scan by Clair V2
 name: $(BuildDefinitionName)_$(date:yyyyMMdd)_$(BuildID)$(rev:.r)
 
-trigger:
-- main
+trigger: none
 
 pool: app-agents
 
