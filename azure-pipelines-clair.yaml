@@ -9,6 +9,10 @@ pool: app-agents
 resources:
 - repo: self
 
+variables:
+  image_name: openjdk
+  image_tag: 17-jdk-slim
+
 jobs:
 
 - job: ClairScanContainerImage
@@ -19,4 +23,6 @@ jobs:
     displayName: 'Build an image'
     inputs:
       command: build
+      repository: $(image_name)
+      tags: $(image_tag)
       dockerFile: '**/Dockerfile'
