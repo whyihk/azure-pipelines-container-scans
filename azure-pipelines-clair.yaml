@@ -4,8 +4,7 @@ name: $(BuildDefinitionName)_$(date:yyyyMMdd)_$(BuildID)$(rev:.r)
 trigger:
 - main
 
-pool: 
-  name: Azure Pipelines
+pool: app-agents
 
 resources:
 - repo: self
