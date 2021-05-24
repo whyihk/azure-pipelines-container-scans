@@ -30,7 +30,7 @@ jobs:
 
   - script: |
       mkdir report
-      trivy image -s HIGH,CRITICAL -o ./report/trivy-image-scan-report.txt $(image_name):$(image_tag)
+      trivy image -s HIGH,CRITICAL $(image_name):$(image_tag) | tee ./report/trivy-image-scan-report.txt
     displayName: "Image scan by Trivy"
     continueOnError: true
 
