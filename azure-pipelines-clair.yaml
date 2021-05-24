@@ -36,7 +36,8 @@ jobs:
       docker run -p 6060:6060 --link clair-db:postgres -d --name clair $(clair_scan)
       MY_IP=$(ifconfig eth0 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
       sleep 10
-      clair-scanner --ip $MY_IP $(image_name):$(image_tag) | tee ./report/clair-image-scan-report.txt
+      CLAIR_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' clair)
+      clair-scanner --ip $MY_IP --clair http://$CLAIR_IP:6060 $(image_name):$(image_tag) | tee ./report/clair-image-scan-report.txt
 
       docker stop clair
       docker rm clair
