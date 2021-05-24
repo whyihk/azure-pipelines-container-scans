@@ -15,12 +15,6 @@ jobs:
   displayName: Scan container image by ClairV2
 
   steps:
-  - script: |
-      RUN curl -fsSLO https://github.com/arminc/clair-scanner/releases/download/v12/clair-scanner_linux_amd64
-      mv clair-scanner_linux_amd64 clair-scanner
-      chmod u+x clair-scanner
-    displayName: "Install clair-scanner"
-
   - task: Docker@2
     displayName: 'Build an image'
     inputs:
