@@ -42,6 +42,7 @@ jobs:
       docker rm clair
       docker stop clair-db
       docker rm clair-db
+      docker image rm $(clair_db)
     displayName: "Image scan by Clair"
     continueOnError: true
 
